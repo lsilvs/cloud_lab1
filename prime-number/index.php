@@ -11,7 +11,7 @@
 		if($n == 2) {
 			return true;
 		} else {
-			while($i <= $n/2) {
+			while($i <= pow($n, (1/2))) {
 				if ($n % $i == 0) {
 					return "false";
 				}
@@ -25,7 +25,7 @@
 		while(true) {
 			$i = 2;
 			$n++;
-			while($i <= $n/2) {
+			while($i <= pow($n, (1/2))) {
 				if ($n % $i == 0) {
 					continue 2;
 				}
@@ -37,13 +37,8 @@
 	}
 
 	if($_POST['digits']) {
-		for($j=0; $j < 15; $j++) {
-			$i = 1;
-			$digits = "1";
-			while ($i < $_POST['digits']) {
-				$digits .= "0";
-				$i++;
-			}
+		for($i=0; $i < 15; $i++) {
+			$digits = pow(10 , ($_POST['digits']-1));
 
 			set_time_limit(0);
 			$time_start = microtime(true);
