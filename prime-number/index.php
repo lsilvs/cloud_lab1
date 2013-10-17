@@ -1,10 +1,11 @@
 <?php
-	// if(true OR $_POST['submit']) {
-	// 	$num = $_POST['txtOne'];
-	// 	echo "<h1>Numero: "+$_POST['txtOne']+"</h1>";
-	// }
-  
- 	function isPrime($n) {
+	/* if started from commandline, wrap parameters to $_POST and $_GET */
+	if (!isset($_SERVER["HTTP_HOST"])) {
+	  parse_str($argv[1], $_GET);
+	  parse_str($argv[1], $_POST);
+	}
+
+	function isPrime($n) {
 		$i = 2;
 
 		if($n == 2) {
@@ -36,27 +37,28 @@
 	}
 
 	if($_POST['digits']) {
-		$i = 1;
-		$digits = "1";
-		while ($i < $_POST['digits']) {
-			$digits .= "0";
-			$i++;
+		for($j=0; $j < 15; $j++) {
+			$i = 1;
+			$digits = "1";
+			while ($i < $_POST['digits']) {
+				$digits .= "0";
+				$i++;
+			}
+
+			set_time_limit(0);
+			$time_start = microtime(true);
+
+			// Find first prime number
+			$firstPrime = firstPrime($digits);
+
+			$time_end = microtime(true);
+			$time = $time_end - $time_start;
+
+			echo "Found prime number ($firstPrime) in $time seconds<br/>\n";
+			// echo isPrime($firstPrime) . "\n";
 		}
-
-		set_time_limit(0);
-		$time_start = microtime(true);
-
-		// Find first prime number
-		$firstPrime = firstPrime($digits);
-
-		$time_end = microtime(true);
-		$time = $time_end - $time_start;
-
-		echo "Found prime number ($firstPrime) in $time seconds<br/>";
-		echo isPrime($firstPrime);
-	}
+	} else {
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -75,3 +77,5 @@
 	</body>
 
 </html>
+
+<?php } ?>
